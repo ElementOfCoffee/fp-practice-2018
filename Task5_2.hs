@@ -47,4 +47,3 @@ ePrecisions = r 0 where
 expFun 0 = 2
 expFun n = expFun (n-1) + (2*n + 2) / (product [1..(2*n + 1)])
 
-
