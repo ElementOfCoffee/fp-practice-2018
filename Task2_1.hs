@@ -64,14 +64,19 @@ nearestLE i (Leaf (a, b)) | i >= a = (a, b)
                           | otherwise = error "No nearest element founded"
 
 nearestLE i (Node (a, b) l r) | i == a = (a, b)
-                              | i < a && isLeaf l = if ((fst $ getPare l) <= i) then getPare l else error "No nearest element founded"
-                              | i < a && isNode l = if (i > (fst $ getPare l)) then if isNode (getRight l) then nearestLE i (getRight l) 
-                                                                                        else 
-                                                                                             if isEmpty (getRight l) then (getPare l)
-                                                                                                 else 
-                                                                                                     if ((fst $ getPare (getRight l)) > i) then (getPare l)
-                                                                                                         else nearestLE i (getRight l)
-                                                                                   else nearestLE i l
+                              | i < a && isLeaf l = if ((fst $ getPare l) <= i) 
+                                then getPare l 
+                                else error "No nearest element founded"
+                              | i < a && isNode l = if (i > (fst $ getPare l)) 
+                                then 
+                                  if isNode (getRight l) 
+                                  then nearestLE i (getRight l) 
+                                  else 
+                                    if isEmpty (getRight l) then (getPare l)
+                                    else 
+                                      if ((fst $ getPare (getRight l)) > i) then (getPare l)
+                                      else nearestLE i (getRight l)
+                                else nearestLE i l
                               | i > a && isEmpty r = (a, b) 
                               | i < a && isEmpty l = error "No nearest element founded"
                               | otherwise = if (getLastLeftKey r) <= i then nearestLE i r else (a, b)
